@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.oj.mapper.PostMapper">
+    
+    <resultMap type="Post" id="PostResult">
+        <result property="id"    column="id"    />
+        <result property="title"    column="title"    />
+        <result property="intro"    column="intro"    />
+        <result property="content"    column="content"    />
+        <result property="coverImg"    column="cover_img"    />
+        <result property="tags"    column="tags"    />
+        <result property="thumbNum"    column="thumb_num"    />
+        <result property="favourNum"    column="favour_num"    />
+        <result property="commentNum"    column="comment_num"    />
+        <result property="userId"    column="user_id"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="isDelete"    column="is_delete"    />
+        <result property="status"    column="status"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectPostVo">
+        select id,
+               title,
+               intro,
+               content,
+               cover_img,
+               tags,
+               thumb_num,
+               favour_num,
+               comment_num,
+               user_id,
+               create_time,
+               update_time,
+               is_delete,
+               status,
+               remark
+        from tx_oj_post
+    </sql>
+
+    <select id="selectPostList" parameterType="Post" resultMap="PostResult">
+        <include refid="selectPostVo"/>
+        <where>
+            <if test="params.keyWord != null and params.keyWord != ''">and (title like concat('%', #{params.keyWord},
+                '%') or intro like concat('%', #{params.keyWord}, '%'))
+            </if>
+            <if test="userId != null ">and user_id = #{userId}</if>
+            <if test="status != null ">and status = #{status}</if>
+            and is_delete = 0
+        </where>
+    </select>
+    
+    <select id="selectPostById" parameterType="Long" resultMap="PostResult">
+        <include refid="selectPostVo"/>
+        where id = #{id} and is_delete = 0
+    </select>
+        
+    <insert id="insertPost" parameterType="Post" useGeneratedKeys="true" keyProperty="id">
+        insert into tx_oj_post
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="title != null">title,</if>
+            <if test="intro != null">intro,</if>
+            <if test="content != null">content,</if>
+            <if test="coverImg != null">cover_img,</if>
+            <if test="tags != null">tags,</if>
+            <if test="thumbNum != null">thumb_num,</if>
+            <if test="favourNum != null">favour_num,</if>
+            <if test="commentNum != null">comment_num,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="isDelete != null">is_delete,</if>
+            <if test="status != null">status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="title != null">#{title},</if>
+            <if test="intro != null">#{intro},</if>
+            <if test="content != null">#{content},</if>
+            <if test="coverImg != null">#{coverImg},</if>
+            <if test="tags != null">#{tags},</if>
+            <if test="thumbNum != null">#{thumbNum},</if>
+            <if test="favourNum != null">#{favourNum},</if>
+            <if test="commentNum != null">#{commentNum},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="isDelete != null">#{isDelete},</if>
+            <if test="status != null">#{status},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePost" parameterType="Post">
+        update tx_oj_post
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null">title = #{title},</if>
+            <if test="intro != null">intro = #{intro},</if>
+            <if test="content != null">content = #{content},</if>
+            <if test="coverImg != null">cover_img = #{coverImg},</if>
+            <if test="tags != null">tags = #{tags},</if>
+            <if test="thumbNum != null">thumb_num = #{thumbNum},</if>
+            <if test="favourNum != null">favour_num = #{favourNum},</if>
+            <if test="commentNum != null">comment_num = #{commentNum},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="isDelete != null">is_delete = #{isDelete},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePostById" parameterType="Long">
+        delete from tx_oj_post where id = #{id}
+    </delete>
+
+    <delete id="deletePostByIds" parameterType="String">
+        delete from tx_oj_post where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

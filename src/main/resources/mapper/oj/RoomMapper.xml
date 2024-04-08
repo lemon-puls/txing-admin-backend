@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.oj.mapper.RoomMapper">
+
+    <resultMap type="Room" id="RoomResult">
+        <result property="id" column="id"/>
+        <result property="type" column="type"/>
+        <result property="hotFlag" column="hot_flag"/>
+        <result property="activeTime" column="active_time"/>
+        <result property="msgId" column="msg_id"/>
+        <result property="extJson" column="ext_json"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="isDelete" column="is_delete"/>
+        <result property="status" column="status"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+    <resultMap id="RoomRoomGroupResult" type="Room" extends="RoomResult">
+        <association property="userShowVO" resultMap="UserResult"/>
+        <collection property="roomGroupList" notNullColumn="sub_id" javaType="java.util.List"
+                    resultMap="RoomGroupResult"/>
+    </resultMap>
+
+    <resultMap id="RoomRoomFriendResult" type="Room" extends="RoomResult">
+        <association property="roomFriend" resultMap="RoomFriendResult"/>
+    </resultMap>
+
+    <resultMap id="UserResult" type="com.ruoyi.project.oj.vo.user.UserShowVO">
+        <result property="id" column="g_userId"/>
+    </resultMap>
+
+    <resultMap type="RoomGroup" id="RoomGroupResult">
+        <result property="id" column="sub_id"/>
+        <result property="roomId" column="sub_room_id"/>
+        <result property="name" column="sub_name"/>
+        <result property="avatar" column="sub_avatar"/>
+        <result property="extJson" column="sub_ext_json"/>
+        <result property="createTime" column="sub_create_time"/>
+        <result property="updateTime" column="sub_update_time"/>
+        <result property="isDelete" column="sub_is_delete"/>
+    </resultMap>
+
+    <resultMap type="RoomFriend" id="RoomFriendResult">
+        <result property="id" column="sub_id"/>
+        <result property="roomId" column="room_id"/>
+        <result property="userId1" column="user_id1"/>
+        <result property="userId2" column="user_id2"/>
+    </resultMap>
+
+    <sql id="selectRoomVo">
+        select a.id,
+               a.type,
+               a.hot_flag,
+               a.active_time,
+               a.msg_id,
+               a.ext_json,
+               a.create_time,
+               a.update_time,
+               a.is_delete,
+               a.status,
+               a.remark,
+               b.id      as sub_id,
+               b.name    as sub_name,
+               b.avatar  as sub_avatar,
+               g.user_id as g_userId
+        from tx_oj_room a
+                 left join tx_oj_room_group b on b.room_id = a.id
+                 left join tx_oj_group_member g on b.id = g.group_id
+    </sql>
+
+    <sql id="selectRoomFriendVo">
+        select a.id,
+               a.type,
+               a.hot_flag,
+               a.active_time,
+               a.msg_id,
+               a.ext_json,
+               a.create_time,
+               a.update_time,
+               a.is_delete,
+               a.status,
+               a.remark,
+               f.user_id1,
+               f.user_id2,
+               f.id as sub_id,
+               f.room_id
+        from tx_oj_room a
+                 left join tx_oj_room_friend f on f.room_id = a.id
+    </sql>
+
+    <select id="selectRoomList" parameterType="Room" resultMap="RoomRoomGroupResult">
+        <include refid="selectRoomVo"/>
+        <where>
+            <if test="hotFlag != null ">and a.hot_flag = #{hotFlag}</if>
+            <if test="params.beginActiveTime != null and params.beginActiveTime != '' and params.endActiveTime != null and params.endActiveTime != ''">
+                and a.active_time between #{params.beginActiveTime} and #{params.endActiveTime}
+            </if>
+            <if test="params.beginCreateTime != null and params.beginCreateTime != '' and params.endCreateTime != null and params.endCreateTime != ''">
+                and a.create_time between #{params.beginCreateTime} and #{params.endCreateTime}
+            </if>
+            <if test="params.beginUpdateTime != null and params.beginUpdateTime != '' and params.endUpdateTime != null and params.endUpdateTime != ''">
+                and a.update_time between #{params.beginUpdateTime} and #{params.endUpdateTime}
+            </if>
+            <if test="status != null ">and a.status = #{status}</if>
+            <if test="params.name != null and params.name != ''">
+                and b.name like concat('%', #{params.name}, '%')
+            </if>
+            <if test="params.userId != null and params.userId != ''">
+                and g.user_id like concat('%', #{params.userId}, '%')
+            </if>
+            and a.is_delete = 0 AND b.is_delete = 0 AND (g.is_delete = 0 || g.is_delete IS NULL)
+            and a.type = 1
+            and (g.role = 2 or g.role is null)
+        </where>
+    </select>
+
+    <select id="selectRoomFriendList" parameterType="Room" resultMap="RoomRoomFriendResult">
+        <include refid="selectRoomFriendVo"/>
+        <where>
+            <if test="hotFlag != null ">and a.hot_flag = #{hotFlag}</if>
+            <if test="params.beginActiveTime != null and params.beginActiveTime != '' and params.endActiveTime != null and params.endActiveTime != ''">
+                and a.active_time between #{params.beginActiveTime} and #{params.endActiveTime}
+            </if>
+            <if test="params.beginCreateTime != null and params.beginCreateTime != '' and params.endCreateTime != null and params.endCreateTime != ''">
+                and a.create_time between #{params.beginCreateTime} and #{params.endCreateTime}
+            </if>
+            <if test="params.beginUpdateTime != null and params.beginUpdateTime != '' and params.endUpdateTime != null and params.endUpdateTime != ''">
+                and a.update_time between #{params.beginUpdateTime} and #{params.endUpdateTime}
+            </if>
+            <if test="status != null ">and a.status = #{status}</if>
+            <if test="params.userId != null and params.userId != ''">
+                and (f.user_id1 = #{params.userId} or f.user_id2 = #{params.userId})
+            </if>
+            and a.is_delete = 0 AND f.is_delete = 0
+            and a.type = 0
+        </where>
+
+    </select>
+
+    <select id="selectRoomById" parameterType="Long" resultMap="RoomRoomGroupResult">
+        select a.id,
+               a.type,
+               a.hot_flag,
+               a.active_time,
+               a.msg_id,
+               a.ext_json,
+               a.create_time,
+               a.update_time,
+               a.is_delete,
+               a.status,
+               a.remark,
+               b.id          as sub_id,
+               b.room_id     as sub_room_id,
+               b.name        as sub_name,
+               b.avatar      as sub_avatar,
+               b.ext_json    as sub_ext_json,
+               b.create_time as sub_create_time,
+               b.update_time as sub_update_time,
+               b.is_delete   as sub_is_delete
+        from tx_oj_room a
+                 left join tx_oj_room_group b on b.room_id = a.id
+        where a.id = #{id}
+    </select>
+
+    <insert id="insertRoom" parameterType="Room" useGeneratedKeys="true" keyProperty="id">
+        insert into tx_oj_room
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="type != null">type,</if>
+            <if test="hotFlag != null">hot_flag,</if>
+            <if test="activeTime != null">active_time,</if>
+            <if test="msgId != null">msg_id,</if>
+            <if test="extJson != null">ext_json,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="isDelete != null">is_delete,</if>
+            <if test="status != null">status,</if>
+            <if test="remark != null">remark,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="type != null">#{type},</if>
+            <if test="hotFlag != null">#{hotFlag},</if>
+            <if test="activeTime != null">#{activeTime},</if>
+            <if test="msgId != null">#{msgId},</if>
+            <if test="extJson != null">#{extJson},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="isDelete != null">#{isDelete},</if>
+            <if test="status != null">#{status},</if>
+            <if test="remark != null">#{remark},</if>
+        </trim>
+    </insert>
+
+    <update id="updateRoom" parameterType="Room">
+        update tx_oj_room
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="type != null">type = #{type},</if>
+            <if test="hotFlag != null">hot_flag = #{hotFlag},</if>
+            <if test="activeTime != null">active_time = #{activeTime},</if>
+            <if test="msgId != null">msg_id = #{msgId},</if>
+            <if test="extJson != null">ext_json = #{extJson},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="isDelete != null">is_delete = #{isDelete},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteRoomById" parameterType="Long">
+        delete
+        from tx_oj_room
+        where id = #{id}
+    </delete>
+
+    <delete id="deleteRoomByIds" parameterType="String">
+        delete from tx_oj_room where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteRoomGroupByRoomIds" parameterType="String">
+        delete from tx_oj_room_group where room_id in
+        <foreach item="roomId" collection="array" open="(" separator="," close=")">
+            #{roomId}
+        </foreach>
+    </delete>
+
+    <delete id="deleteRoomGroupByRoomId" parameterType="Long">
+        delete
+        from tx_oj_room_group
+        where room_id = #{roomId}
+    </delete>
+
+    <insert id="batchRoomGroup">
+        insert into tx_oj_room_group( id, room_id, name, avatar, ext_json, create_time, update_time, is_delete) values
+        <foreach item="item" index="index" collection="list" separator=",">
+            ( #{item.id}, #{item.roomId}, #{item.name}, #{item.avatar}, #{item.extJson}, #{item.createTime},
+            #{item.updateTime}, #{item.isDelete})
+        </foreach>
+    </insert>
+</mapper>

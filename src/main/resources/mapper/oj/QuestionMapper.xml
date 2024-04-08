@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.oj.mapper.QuestionMapper">
+
+    <resultMap type="Question" id="QuestionResult">
+        <result property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="tags" column="tags"/>
+        <result property="answer" column="answer"/>
+        <result property="submitNum" column="submit_num"/>
+        <result property="acceptedNum" column="accepted_num"/>
+        <result property="judgeCase" column="judge_case"/>
+        <result property="judgeConfig" column="judge_config"/>
+        <result property="thumbNum" column="thumb_num"/>
+        <result property="favourNum" column="favour_num"/>
+        <result property="userId" column="user_id"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="isDelete" column="is_delete"/>
+    </resultMap>
+
+    <sql id="selectQuestionVo">
+        select id,
+               title,
+               content,
+               tags,
+               answer,
+               submit_num,
+               accepted_num,
+               judge_case,
+               judge_config,
+               thumb_num,
+               favour_num,
+               user_id,
+               create_time,
+               update_time,
+               is_delete
+        from tx_oj_question
+    </sql>
+
+    <select id="selectQuestionList" parameterType="Question" resultMap="QuestionResult">
+        <include refid="selectQuestionVo"/>
+        <where>
+            <if test="title != null  and title != ''">and title like concat('%', #{title}, '%')</if>
+            <if test="tags != null  and tags != ''">and tags like concat('%', #{tags}, '%')</if>
+            <if test="userId != null ">and user_id = #{userId}</if>
+            and is_delete = 0
+        </where>
+    </select>
+
+    <select id="selectQuestionById" parameterType="Long" resultMap="QuestionResult">
+        <include refid="selectQuestionVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertQuestion" parameterType="Question" useGeneratedKeys="true" keyProperty="id">
+        insert into tx_oj_question
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="title != null">title,</if>
+            <if test="content != null">content,</if>
+            <if test="tags != null">tags,</if>
+            <if test="answer != null">answer,</if>
+            <if test="submitNum != null">submit_num,</if>
+            <if test="acceptedNum != null">accepted_num,</if>
+            <if test="judgeCase != null">judge_case,</if>
+            <if test="judgeConfig != null">judge_config,</if>
+            <if test="thumbNum != null">thumb_num,</if>
+            <if test="favourNum != null">favour_num,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="isDelete != null">is_delete,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="title != null">#{title},</if>
+            <if test="content != null">#{content},</if>
+            <if test="tags != null">#{tags},</if>
+            <if test="answer != null">#{answer},</if>
+            <if test="submitNum != null">#{submitNum},</if>
+            <if test="acceptedNum != null">#{acceptedNum},</if>
+            <if test="judgeCase != null">#{judgeCase},</if>
+            <if test="judgeConfig != null">#{judgeConfig},</if>
+            <if test="thumbNum != null">#{thumbNum},</if>
+            <if test="favourNum != null">#{favourNum},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="isDelete != null">#{isDelete},</if>
+        </trim>
+    </insert>
+
+    <update id="updateQuestion" parameterType="Question">
+        update tx_oj_question
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null">title = #{title},</if>
+            <if test="content != null">content = #{content},</if>
+            <if test="tags != null">tags = #{tags},</if>
+            <if test="answer != null">answer = #{answer},</if>
+            <if test="submitNum != null">submit_num = #{submitNum},</if>
+            <if test="acceptedNum != null">accepted_num = #{acceptedNum},</if>
+            <if test="judgeCase != null">judge_case = #{judgeCase},</if>
+            <if test="judgeConfig != null">judge_config = #{judgeConfig},</if>
+            <if test="thumbNum != null">thumb_num = #{thumbNum},</if>
+            <if test="favourNum != null">favour_num = #{favourNum},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="isDelete != null">is_delete = #{isDelete},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteQuestionById" parameterType="Long">
+        delete
+        from tx_oj_question
+        where id = #{id}
+    </delete>
+
+    <delete id="deleteQuestionByIds" parameterType="String">
+        delete from tx_oj_question where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

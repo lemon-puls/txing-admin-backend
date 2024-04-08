@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.oj.mapper.MatchWeekMapper">
+    
+    <resultMap type="MatchWeek" id="MatchWeekResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="sessionNo"    column="session_no"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="status"    column="status"    />
+        <result property="joinCount"    column="join_count"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="isDelete"    column="is_delete"    />
+    </resultMap>
+
+    <sql id="selectMatchWeekVo">
+        select id, name, session_no, start_time, end_time, status, join_count, create_time, update_time, is_delete from tx_oj_match_week
+    </sql>
+
+    <select id="selectMatchWeekList" parameterType="MatchWeek" resultMap="MatchWeekResult">
+        <include refid="selectMatchWeekVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="params.beginStartTime != null and params.beginStartTime != '' and params.endStartTime != null and params.endStartTime != ''">
+                and start_time between #{params.beginStartTime} and #{params.endStartTime}
+            </if>
+            <if test="sessionNo != null "> and session_no = #{sessionNo}</if>
+            <if test="startTime != null "> and start_time = #{startTime}</if>
+            <if test="endTime != null "> and end_time = #{endTime}</if>
+            <if test="status != null "> and status = #{status}</if>
+             and is_delete = 0
+        </where>
+        order by start_time DESC
+    </select>
+    
+    <select id="selectMatchWeekById" parameterType="Long" resultMap="MatchWeekResult">
+        <include refid="selectMatchWeekVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertMatchWeek" parameterType="MatchWeek" useGeneratedKeys="true" keyProperty="id">
+        insert into tx_oj_match_week
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="sessionNo != null">session_no,</if>
+            <if test="startTime != null">start_time,</if>
+            <if test="endTime != null">end_time,</if>
+            <if test="status != null">status,</if>
+            <if test="joinCount != null">join_count,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="isDelete != null">is_delete,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="sessionNo != null">#{sessionNo},</if>
+            <if test="startTime != null">#{startTime},</if>
+            <if test="endTime != null">#{endTime},</if>
+            <if test="status != null">#{status},</if>
+            <if test="joinCount != null">#{joinCount},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="isDelete != null">#{isDelete},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMatchWeek" parameterType="MatchWeek">
+        update tx_oj_match_week
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="sessionNo != null">session_no = #{sessionNo},</if>
+            <if test="startTime != null">start_time = #{startTime},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="joinCount != null">join_count = #{joinCount},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="isDelete != null">is_delete = #{isDelete},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteMatchWeekById" parameterType="Long">
+        delete from tx_oj_match_week where id = #{id}
+    </delete>
+
+    <delete id="deleteMatchWeekByIds" parameterType="String">
+        delete from tx_oj_match_week where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

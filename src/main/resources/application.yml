@@ -1,0 +1,196 @@
+# 项目相关配置
+ruoyi:
+  # 名称
+  name: RuoYi
+  # 版本
+  version: 3.8.7
+  # 版权年份
+  copyrightYear: 2024
+  # 文件路径 示例（ Windows配置D:/ruoyi/uploadPath，Linux配置 /home/ruoyi/uploadPath）
+  profile: D:/ruoyi/uploadPath
+  # 获取ip地址开关
+  addressEnabled: false
+  # 验证码类型 math 数字计算 char 字符验证
+  captchaType: math
+
+# 开发环境配置
+server:
+  # 服务器的HTTP端口，默认为8080
+  port: 8080
+  servlet:
+    # 应用的访问路径
+    context-path: /
+  tomcat:
+    # tomcat的URI编码
+    uri-encoding: UTF-8
+    # 连接数满后的排队数，默认为100
+    accept-count: 1000
+    threads:
+      # tomcat最大线程数，默认为200
+      max: 800
+      # Tomcat启动初始化的线程数，默认值10
+      min-spare: 100
+
+# 日志配置
+logging:
+  level:
+    com.ruoyi: debug
+    org.springframework: warn
+
+# 用户配置
+user:
+  password:
+    # 密码最大错误次数
+    maxRetryCount: 5
+    # 密码锁定时间（默认10分钟）
+    lockTime: 10
+
+# Spring配置
+spring:
+  # 资源信息
+  messages:
+    # 国际化资源文件路径
+    basename: i18n/messages
+  profiles:
+    active: druid
+  # 文件上传
+  servlet:
+    multipart:
+      # 单个文件大小
+      max-file-size: 10MB
+      # 设置总上传的文件大小
+      max-request-size: 20MB
+  # 服务模块
+  devtools:
+    restart:
+      # 热部署开关
+      enabled: true
+  # redis 配置
+  redis:
+    # 地址
+    host: localhost
+    # 端口，默认为6379
+    port: 6379
+    # 数据库索引
+    database: 5
+    # 密码
+    password: 123456
+    # 连接超时时间
+    timeout: 10s
+    lettuce:
+      pool:
+        # 连接池中的最小空闲连接
+        min-idle: 0
+        # 连接池中的最大空闲连接
+        max-idle: 8
+        # 连接池的最大数据库连接数
+        max-active: 8
+        # #连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: -1ms
+
+# token配置
+token:
+  # 令牌自定义标识
+  header: Authorization
+  # 令牌密钥
+  secret: abcdefghijklmnopqrstuvwxyz
+  # 令牌有效期（默认30分钟）
+  expireTime: 30
+
+# MyBatis配置
+#mybatis:
+#  # 搜索指定包别名
+#  typeAliasesPackage: com.ruoyi.project.**.domain
+#  # 配置mapper的扫描，找到所有的mapper.xml映射文件
+#  mapperLocations: classpath*:mapper/**/*Mapper.xml
+#  # 加载全局的配置文件
+#  configLocation: classpath:mapper/mybatis-config.xml
+
+# PageHelper分页插件
+pagehelper:
+  helperDialect: mysql
+  supportMethodsArguments: true
+  params: count=countSql
+
+# Swagger配置
+swagger:
+  # 是否开启swagger
+  enabled: true
+  # 请求前缀
+  pathMapping: /dev-api
+
+# 防止XSS攻击
+xss:
+  # 过滤开关
+  enabled: true
+  # 排除链接（多个用逗号分隔）
+  excludes: /system/notice
+  # 匹配链接
+  urlPatterns: /system/*,/monitor/*,/tool/*
+
+# 代码生成
+gen:
+  # 作者
+  author: ruoyi
+  # 默认生成包路径 system 需改成自己的模块名称 如 system monitor tool
+  packageName: com.ruoyi.project.oj
+  # 自动去除表前缀，默认是true
+  autoRemovePre: true
+  # 表前缀（生成类名不会包含表前缀，多个用逗号分隔）
+  tablePrefix: txing_oj_
+#mybatis-plus:
+#  configuration:
+#    map-underscore-to-camel-case: true
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#  global-config:
+#    db-config:
+#      logic-delete-field: is_delete # 全局逻辑删除的实体字段名
+#      logic-delete-value: 1 # 逻辑已删除值（默认为 1）
+#      logic-not-delete-value: 0 # 逻辑未删除值（默认为 0）
+#  mapper-locations: classpath:mapper/**/*.xml
+mybatis-plus:
+  # Mapper.xml 文件位置 Maven 多模块项目的扫描路径需以 classpath*: 开头
+  mapper-locations: classpath*:mapper/**/*Mapper.xml
+  #  #MyBaits 别名包扫描路径，通过该属性可以给包中的类注册别名 实体扫描，多个package用逗号或者分号分隔
+  type-aliases-package: com.ruoyi.project.**.domain
+  #  config-location: classpath:mybatis/mybatis-config.xml
+  #  #通过父类（或实现接口）的方式来限定扫描实体
+  #  typeAliasesSuperType: com.vanhr.user.dao.entity.baseEntity
+  #  #枚举类 扫描路径 如果配置了该属性，会将路径下的枚举类进行注入，让实体类字段能够简单快捷的使用枚举属性
+  #  typeEnumsPackage: com.vanhr.user.dao.enums
+  # 启动时是否检查 MyBatis XML 文件的存在，默认不检查 仅限spring boot 使用
+  checkConfigLocation : true
+  #  #通过该属性可指定 MyBatis 的执行器，MyBatis 的执行器总共有三种：
+  #  # ExecutorType.SIMPLE：该执行器类型不做特殊的事情，为每个语句的执行创建一个新的预处理语句（PreparedStatement）
+  #  # ExecutorType.REUSE：该执行器类型会复用预处理语句（PreparedStatement）
+  #  # ExecutorType.BATCH：该执行器类型会批量执行所有的更新语句
+  #  executorType: SIMPLE
+  #  # 指定外部化 MyBatis Properties 配置，通过该配置可以抽离配置，实现不同环境的配置部署
+  #  configurationProperties:
+  configuration: # MyBatis 原生支持的配置
+    # 是否开启自动驼峰命名规则（camel case）映射
+    map-underscore-to-camel-case: true
+    # 枚举处理类,如果配置了该属性,枚举将统一使用指定处理器进行处理
+    #   org.apache.ibatis.type.EnumTypeHandler : 存储枚举的名称
+    #   org.apache.ibatis.type.EnumOrdinalTypeHandler : 存储枚举的索引
+    #   com.baomidou.mybatisplus.extension.handlers.MybatisEnumTypeHandler : 枚举类需要实现IEnum接口或字段标记@EnumValue注解.(3.1.2以下版本为EnumTypeHandler)
+    #    defaultEnumTypeHandler: com.baomidou.mybatisplus.extension.handlers.MybatisEnumTypeHandler
+    # 配置JdbcTypeForNull, oracle数据库必须配置
+    jdbc-type-for-null: null
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+  #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config: # 全局策略配置
+    # 是否控制台 print mybatis-plus 的 LOGO
+    banner: true
+    db-config:
+      # id类型
+      id-type: auto
+      # 表名是否使用下划线命名，默认数据库表使用下划线命名
+      table-underline: true
+      #是否开启大写命名，默认不开启
+#      capital-mode: false
+#      #逻辑已删除值,(逻辑删除下有效) 需要注入逻辑策略LogicSqlInjector 以@Bean方式注入
+      logic-not-delete-value: 0
+#      #逻辑未删除值,(逻辑删除下有效)
+      logic-delete-value: 1
+      logic-delete-field: is_delete # 全局逻辑删除的实体字段名

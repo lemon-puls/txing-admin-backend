@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.oj.mapper.MatchWeekQuestionRelateMapper">
+    
+    <resultMap type="MatchWeekQuestionRelate" id="MatchWeekQuestionRelateResult">
+        <result property="id"    column="id"    />
+        <result property="matchId"    column="match_id"    />
+        <result property="questionId"    column="question_id"    />
+        <result property="questionOrder"    column="question_order"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="isDelete"    column="is_delete"    />
+    </resultMap>
+
+    <sql id="selectMatchWeekQuestionRelateVo">
+        select id, match_id, question_id, question_order, create_time, update_time, is_delete from tx_oj_match_week_question_relate
+    </sql>
+
+    <select id="selectMatchWeekQuestionRelateList" parameterType="MatchWeekQuestionRelate" resultMap="MatchWeekQuestionRelateResult">
+        <include refid="selectMatchWeekQuestionRelateVo"/>
+        <where>  
+            <if test="matchId != null "> and match_id = #{matchId}</if>
+            <if test="questionId != null "> and question_id = #{questionId}</if>
+            <if test="questionOrder != null "> and question_order = #{questionOrder}</if>
+            <if test="isDelete != null "> and is_delete = #{isDelete}</if>
+        </where>
+    </select>
+    
+    <select id="selectMatchWeekQuestionRelateById" parameterType="Long" resultMap="MatchWeekQuestionRelateResult">
+        <include refid="selectMatchWeekQuestionRelateVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertMatchWeekQuestionRelate" parameterType="MatchWeekQuestionRelate" useGeneratedKeys="true" keyProperty="id">
+        insert into tx_oj_match_week_question_relate
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="matchId != null">match_id,</if>
+            <if test="questionId != null">question_id,</if>
+            <if test="questionOrder != null">question_order,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="isDelete != null">is_delete,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="matchId != null">#{matchId},</if>
+            <if test="questionId != null">#{questionId},</if>
+            <if test="questionOrder != null">#{questionOrder},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="isDelete != null">#{isDelete},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMatchWeekQuestionRelate" parameterType="MatchWeekQuestionRelate">
+        update tx_oj_match_week_question_relate
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="matchId != null">match_id = #{matchId},</if>
+            <if test="questionId != null">question_id = #{questionId},</if>
+            <if test="questionOrder != null">question_order = #{questionOrder},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="isDelete != null">is_delete = #{isDelete},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteMatchWeekQuestionRelateById" parameterType="Long">
+        delete from tx_oj_match_week_question_relate where id = #{id}
+    </delete>
+
+    <delete id="deleteMatchWeekQuestionRelateByIds" parameterType="String">
+        delete from tx_oj_match_week_question_relate where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

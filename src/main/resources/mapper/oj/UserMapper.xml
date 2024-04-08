@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.oj.mapper.UserMapper">
+
+    <resultMap type="User" id="UserResult">
+        <result property="id" column="id"/>
+        <result property="userAccount" column="user_account"/>
+        <result property="userPassword" column="user_password"/>
+        <result property="unionId" column="union_id"/>
+        <result property="mpOpenId" column="mp_open_id"/>
+        <result property="userName" column="user_name"/>
+        <result property="userAvatar" column="user_avatar"/>
+        <result property="userProfile" column="user_profile"/>
+        <result property="userRole" column="user_role"/>
+        <result property="school" column="school"/>
+        <result property="profession" column="profession"/>
+        <result property="workExperience" column="work_experience"/>
+        <result property="questionCount" column="question_count"/>
+        <result property="acceptedRate" column="accepted_rate"/>
+        <result property="personSign" column="person_sign"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="isDelete" column="is_delete"/>
+        <result property="submitCount" column="submit_count"/>
+        <result property="acceptedCount" column="accepted_count"/>
+        <result property="activeStatus" column="active_status"/>
+        <result property="lastOpsTime" column="last_ops_time"/>
+        <result property="matchScore" column="match_score"/>
+        <result property="status" column="status"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+    <sql id="selectUserVo">
+        select id,
+               user_account,
+               user_password,
+               union_id,
+               mp_open_id,
+               user_name,
+               user_avatar,
+               user_profile,
+               user_role,
+               school,
+               profession,
+               work_experience,
+               question_count,
+               accepted_rate,
+               person_sign,
+               create_time,
+               update_time,
+               is_delete,
+               submit_count,
+               accepted_count,
+               active_status,
+               last_ops_time,
+               match_score,
+               status,
+               remark
+        from tx_oj_user
+    </sql>
+
+    <select id="selectUserList" parameterType="User" resultMap="UserResult">
+        <include refid="selectUserVo"/>
+        <where>
+            <if test="userName != null  and userName != ''">and user_name like concat('%', #{userName}, '%')</if>
+            <!--             <if test="userRole != null  and userRole != ''"> and user_role = #{userRole}</if> -->
+            <if test="school != null  and school != ''">and school like concat('%', #{school}, '%')</if>
+            <if test="profession != null  and profession != ''">and profession like concat('%', #{profession}, '%')</if>
+            <!--            <if test="workExperience != null "> and work_experience = #{workExperience}</if>-->
+            <if test="activeStatus != null ">and active_status = #{activeStatus}</if>
+        </where>
+        <if test="sortParams != null">
+            order by
+            <!-- 在这里使用 <foreach> 标签 -->
+            <foreach collection="sortParams.entrySet()" index="key" item="value" open="" separator="," close="">
+                ${key} ${value}
+            </foreach>
+        </if>
+
+    </select>
+
+    <select id="selectUserById" parameterType="Long" resultMap="UserResult">
+        <include refid="selectUserVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertUser" parameterType="User" useGeneratedKeys="true" keyProperty="id">
+        insert into tx_oj_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userAccount != null">user_account,</if>
+            <if test="userPassword != null">user_password,</if>
+            <if test="unionId != null">union_id,</if>
+            <if test="mpOpenId != null">mp_open_id,</if>
+            <if test="userName != null">user_name,</if>
+            <if test="userAvatar != null">user_avatar,</if>
+            <if test="userProfile != null">user_profile,</if>
+            <if test="userRole != null">user_role,</if>
+            <if test="school != null">school,</if>
+            <if test="profession != null">profession,</if>
+            <if test="workExperience != null">work_experience,</if>
+            <if test="questionCount != null">question_count,</if>
+            <if test="acceptedRate != null">accepted_rate,</if>
+            <if test="personSign != null">person_sign,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="isDelete != null">is_delete,</if>
+            <if test="submitCount != null">submit_count,</if>
+            <if test="acceptedCount != null">accepted_count,</if>
+            <if test="activeStatus != null">active_status,</if>
+            <if test="lastOpsTime != null">last_ops_time,</if>
+            <if test="matchScore != null">match_score,</if>
+            <if test="status != null">status,</if>
+            <if test="remark != null">remark,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userAccount != null">#{userAccount},</if>
+            <if test="userPassword != null">#{userPassword},</if>
+            <if test="unionId != null">#{unionId},</if>
+            <if test="mpOpenId != null">#{mpOpenId},</if>
+            <if test="userName != null">#{userName},</if>
+            <if test="userAvatar != null">#{userAvatar},</if>
+            <if test="userProfile != null">#{userProfile},</if>
+            <if test="userRole != null">#{userRole},</if>
+            <if test="school != null">#{school},</if>
+            <if test="profession != null">#{profession},</if>
+            <if test="workExperience != null">#{workExperience},</if>
+            <if test="questionCount != null">#{questionCount},</if>
+            <if test="acceptedRate != null">#{acceptedRate},</if>
+            <if test="personSign != null">#{personSign},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="isDelete != null">#{isDelete},</if>
+            <if test="submitCount != null">#{submitCount},</if>
+            <if test="acceptedCount != null">#{acceptedCount},</if>
+            <if test="activeStatus != null">#{activeStatus},</if>
+            <if test="lastOpsTime != null">#{lastOpsTime},</if>
+            <if test="matchScore != null">#{matchScore},</if>
+            <if test="status != null">#{status},</if>
+            <if test="remark != null">#{remark},</if>
+        </trim>
+    </insert>
+
+    <update id="updateUser" parameterType="User">
+        update tx_oj_user
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userAccount != null">user_account = #{userAccount},</if>
+            <if test="userPassword != null">user_password = #{userPassword},</if>
+            <if test="unionId != null">union_id = #{unionId},</if>
+            <if test="mpOpenId != null">mp_open_id = #{mpOpenId},</if>
+            <if test="userName != null">user_name = #{userName},</if>
+            <if test="userAvatar != null">user_avatar = #{userAvatar},</if>
+            <if test="userProfile != null">user_profile = #{userProfile},</if>
+            <if test="userRole != null">user_role = #{userRole},</if>
+            <if test="school != null">school = #{school},</if>
+            <if test="profession != null">profession = #{profession},</if>
+            <if test="workExperience != null">work_experience = #{workExperience},</if>
+            <if test="questionCount != null">question_count = #{questionCount},</if>
+            <if test="acceptedRate != null">accepted_rate = #{acceptedRate},</if>
+            <if test="personSign != null">person_sign = #{personSign},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="isDelete != null">is_delete = #{isDelete},</if>
+            <if test="submitCount != null">submit_count = #{submitCount},</if>
+            <if test="acceptedCount != null">accepted_count = #{acceptedCount},</if>
+            <if test="activeStatus != null">active_status = #{activeStatus},</if>
+            <if test="lastOpsTime != null">last_ops_time = #{lastOpsTime},</if>
+            <if test="matchScore != null">match_score = #{matchScore},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteUserById" parameterType="Long">
+        delete
+        from tx_oj_user
+        where id = #{id}
+    </delete>
+
+    <delete id="deleteUserByIds" parameterType="String">
+        delete from tx_oj_user where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

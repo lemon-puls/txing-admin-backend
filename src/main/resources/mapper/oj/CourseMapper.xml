@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.oj.mapper.CourseMapper">
+    
+    <resultMap type="Course" id="CourseResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="coverUrl"    column="cover_url"    />
+        <result property="times"    column="times"    />
+        <result property="noduleCount"    column="nodule_count"    />
+        <result property="favourCount"    column="favour_count"    />
+        <result property="userId"    column="user_id"    />
+        <result property="intro"    column="intro"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="isDelete"    column="is_delete"    />
+        <result property="status"    column="status"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectCourseVo">
+        select id, name, cover_url, times, nodule_count, favour_count, user_id, intro, create_time, update_time, is_delete, status, remark from tx_oj_course_course
+    </sql>
+
+    <select id="selectCourseList" parameterType="Course" resultMap="CourseResult">
+        <include refid="selectCourseVo"/>
+        <where>
+            <if test="params.keyWord != null  and params.keyWord != ''">and (name like concat('%', #{params.keyWord},
+                '%') or intro like concat('%', #{params.keyWord}, '%'))
+            </if>
+            <if test="userId != null ">and user_id = #{userId}</if>
+            <!--            <if test="intro != null  and intro != ''"> and intro = #{intro}</if>-->
+            <if test="status != null ">and status = #{status}</if>
+            and is_delete = 0
+        </where>
+    </select>
+    
+    <select id="selectCourseById" parameterType="Long" resultMap="CourseResult">
+        <include refid="selectCourseVo"/>
+        where id = #{id} and is_delete = 0
+    </select>
+        
+    <insert id="insertCourse" parameterType="Course" useGeneratedKeys="true" keyProperty="id">
+        insert into tx_oj_course_course
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">name,</if>
+            <if test="coverUrl != null and coverUrl != ''">cover_url,</if>
+            <if test="times != null">times,</if>
+            <if test="noduleCount != null">nodule_count,</if>
+            <if test="favourCount != null">favour_count,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="intro != null">intro,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="isDelete != null">is_delete,</if>
+            <if test="status != null">status,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="coverUrl != null and coverUrl != ''">#{coverUrl},</if>
+            <if test="times != null">#{times},</if>
+            <if test="noduleCount != null">#{noduleCount},</if>
+            <if test="favourCount != null">#{favourCount},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="intro != null">#{intro},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="isDelete != null">#{isDelete},</if>
+            <if test="status != null">#{status},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCourse" parameterType="Course">
+        update tx_oj_course_course
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="coverUrl != null and coverUrl != ''">cover_url = #{coverUrl},</if>
+            <if test="times != null">times = #{times},</if>
+            <if test="noduleCount != null">nodule_count = #{noduleCount},</if>
+            <if test="favourCount != null">favour_count = #{favourCount},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="intro != null">intro = #{intro},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="isDelete != null">is_delete = #{isDelete},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id} and is_delete = 0
+    </update>
+
+    <delete id="deleteCourseById" parameterType="Long">
+        delete
+        from tx_oj_course_course
+        where id = #{id}
+          and is_delete = 0
+    </delete>
+
+    <delete id="deleteCourseByIds" parameterType="String">
+        delete from tx_oj_course_course where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
