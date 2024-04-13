@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ruoyi.project.oj.mapper.RoomMapper">
+<mapper namespace="com.txing.project.oj.mapper.RoomMapper">
 
     <resultMap type="Room" id="RoomResult">
         <result property="id" column="id"/>
@@ -28,7 +28,7 @@
         <association property="roomFriend" resultMap="RoomFriendResult"/>
     </resultMap>
 
-    <resultMap id="UserResult" type="com.ruoyi.project.oj.vo.user.UserShowVO">
+    <resultMap id="UserResult" type="com.txing.project.oj.vo.user.UserShowVO">
         <result property="id" column="g_userId"/>
     </resultMap>
 

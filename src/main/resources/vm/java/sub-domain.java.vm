@@ -3,10 +3,7 @@ package ${packageName}.domain;
 #foreach ($import in $subImportList)
 import ${import};
 #end
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-import com.ruoyi.framework.aspectj.lang.annotation.Excel;
-import com.ruoyi.framework.web.domain.BaseEntity;
+import com.txing.framework.aspectj.lang.annotation.Excel;
 
 /**
  * ${subTable.functionName}对象 ${subTableName}
