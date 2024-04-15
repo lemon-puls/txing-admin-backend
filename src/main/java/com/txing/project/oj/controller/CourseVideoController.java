@@ -49,7 +49,7 @@ public class CourseVideoController extends BaseController
     /**
      * 导出课程视频列表
      */
-    @PreAuthorize("@ss.hasPermi('oj:course:export')")
+//    @PreAuthorize("@ss.hasPermi('oj:course:export')")
     @Log(title = "课程视频", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, CourseVideo courseVideo)
@@ -62,7 +62,7 @@ public class CourseVideoController extends BaseController
     /**
      * 获取课程视频详细信息
      */
-    @PreAuthorize("@ss.hasPermi('oj:course:query')")
+//    @PreAuthorize("@ss.hasPermi('oj:course:query')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -72,7 +72,7 @@ public class CourseVideoController extends BaseController
     /**
      * 新增课程视频
      */
-    @PreAuthorize("@ss.hasPermi('oj:course:add')")
+//    @PreAuthorize("@ss.hasPermi('oj:course:add')")
     @Log(title = "课程视频", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody CourseVideo courseVideo)
@@ -83,7 +83,7 @@ public class CourseVideoController extends BaseController
     /**
      * 修改课程视频
      */
-    @PreAuthorize("@ss.hasPermi('oj:course:edit')")
+//    @PreAuthorize("@ss.hasPermi('oj:course:edit')")
     @Log(title = "课程视频", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody CourseVideo courseVideo)
@@ -94,7 +94,7 @@ public class CourseVideoController extends BaseController
     /**
      * 删除课程视频
      */
-    @PreAuthorize("@ss.hasPermi('oj:course:remove')")
+//    @PreAuthorize("@ss.hasPermi('oj:course:remove')")
     @Log(title = "课程视频", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)

@@ -48,7 +48,7 @@ public class QuestionController extends BaseController {
     private IQuestionService questionService;
 
     /**
-     * 查询题目中心列表
+     * 查询题目列表
      */
     @ApiOperation("获取题目列表")
     @PreAuthorize("@ss.hasPermi('oj:question:list')")
@@ -60,10 +60,10 @@ public class QuestionController extends BaseController {
     }
 
     /**
-     * 导出题目中心列表
+     * 导出题目列表
      */
     @ApiOperation("导出题目列表")
-    @PreAuthorize("@ss.hasPermi('oj:question:export')")
+//    @PreAuthorize("@ss.hasPermi('oj:question:export')")
     @Log(title = "题目中心", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, Question question) {
@@ -73,9 +73,9 @@ public class QuestionController extends BaseController {
     }
 
     /**
-     * 获取题目中心详细信息
+     * 获取题目详细信息
      */
-    @PreAuthorize("@ss.hasPermi('oj:question:query')")
+//    @PreAuthorize("@ss.hasPermi('oj:question:query')")
     @GetMapping(value = "/{id}")
     @ApiOperation("通过id获取题目")
     public AjaxResult getInfo(@PathVariable("id") Long id) {
@@ -83,9 +83,9 @@ public class QuestionController extends BaseController {
     }
 
     /**
-     * 新增题目中心
+     * 新增题目
      */
-    @PreAuthorize("@ss.hasPermi('oj:question:add')")
+//    @PreAuthorize("@ss.hasPermi('oj:question:add')")
     @Log(title = "题目中心", businessType = BusinessType.INSERT)
     @PostMapping
     @ApiOperation("新增题目")
@@ -118,9 +118,9 @@ public class QuestionController extends BaseController {
     }
 
     /**
-     * 修改题目中心
+     * 修改题目
      */
-    @PreAuthorize("@ss.hasPermi('oj:question:edit')")
+//    @PreAuthorize("@ss.hasPermi('oj:question:edit')")
     @Log(title = "题目中心", businessType = BusinessType.UPDATE)
     @PutMapping
     @ApiOperation("更新题目")
@@ -151,7 +151,7 @@ public class QuestionController extends BaseController {
     /**
      * 删除题目中心
      */
-    @PreAuthorize("@ss.hasPermi('oj:question:remove')")
+//    @PreAuthorize("@ss.hasPermi('oj:question:remove')")
     @Log(title = "题目中心", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     @ApiOperation("删除题目Batch")

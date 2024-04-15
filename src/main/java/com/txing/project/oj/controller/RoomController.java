@@ -80,7 +80,7 @@ public class RoomController extends BaseController {
     /**
      * 导出聊天房间列表
      */
-    @PreAuthorize("@ss.hasPermi('oj:room:export')")
+//    @PreAuthorize("@ss.hasPermi('oj:room:export')")
     @Log(title = "聊天房间", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     @ApiOperation("导出聊天房间列表")
@@ -94,7 +94,7 @@ public class RoomController extends BaseController {
      * 获取聊天房间详细信息
      */
     @ApiOperation("获取聊天房间详细信息")
-    @PreAuthorize("@ss.hasPermi('oj:room:query')")
+//    @PreAuthorize("@ss.hasPermi('oj:room:query')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id) {
         return success(roomService.selectRoomById(id));
@@ -104,7 +104,7 @@ public class RoomController extends BaseController {
      * 新增聊天房间
      */
     @ApiOperation("新增聊天房间")
-    @PreAuthorize("@ss.hasPermi('oj:room:add')")
+//    @PreAuthorize("@ss.hasPermi('oj:room:add')")
     @Log(title = "聊天房间", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody Room room) {
@@ -115,7 +115,7 @@ public class RoomController extends BaseController {
      * 修改聊天房间
      */
     @ApiOperation("修改聊天房间")
-    @PreAuthorize("@ss.hasPermi('oj:room:edit')")
+//    @PreAuthorize("@ss.hasPermi('oj:room:edit')")
     @Log(title = "聊天房间", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody Room room) {
@@ -126,7 +126,7 @@ public class RoomController extends BaseController {
      * 删除聊天房间
      */
     @ApiOperation("删除聊天房间")
-    @PreAuthorize("@ss.hasPermi('oj:room:remove')")
+//    @PreAuthorize("@ss.hasPermi('oj:room:remove')")
     @Log(title = "聊天房间", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids) {

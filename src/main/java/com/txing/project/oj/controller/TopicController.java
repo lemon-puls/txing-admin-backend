@@ -59,7 +59,7 @@ public class TopicController extends BaseController {
     /**
      * 导出帖子列表
      */
-    @PreAuthorize("@ss.hasPermi('oj:forum:export')")
+//    @PreAuthorize("@ss.hasPermi('oj:forum:export')")
     @Log(title = "帖子", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     @ApiOperation("导出帖子列表")
@@ -72,7 +72,7 @@ public class TopicController extends BaseController {
     /**
      * 获取帖子详细信息
      */
-    @PreAuthorize("@ss.hasPermi('oj:forum:query')")
+//    @PreAuthorize("@ss.hasPermi('oj:forum:query')")
     @GetMapping(value = "/{id}")
     @ApiOperation("获取帖子详情")
     public AjaxResult getInfo(@PathVariable("id") Long id) {
@@ -82,7 +82,7 @@ public class TopicController extends BaseController {
     /**
      * 新增帖子
      */
-    @PreAuthorize("@ss.hasPermi('oj:forum:add')")
+//    @PreAuthorize("@ss.hasPermi('oj:forum:add')")
     @Log(title = "帖子", businessType = BusinessType.INSERT)
     @PostMapping
     @ApiOperation("新增帖子")
@@ -93,7 +93,7 @@ public class TopicController extends BaseController {
     /**
      * 修改帖子
      */
-    @PreAuthorize("@ss.hasPermi('oj:forum:edit')")
+//    @PreAuthorize("@ss.hasPermi('oj:forum:edit')")
     @Log(title = "帖子", businessType = BusinessType.UPDATE)
     @PutMapping
     @ApiOperation("修改帖子")
@@ -104,7 +104,7 @@ public class TopicController extends BaseController {
     /**
      * 删除帖子
      */
-    @PreAuthorize("@ss.hasPermi('oj:forum:remove')")
+//    @PreAuthorize("@ss.hasPermi('oj:forum:remove')")
     @Log(title = "帖子", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     @ApiOperation("删除帖子")

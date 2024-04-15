@@ -53,7 +53,7 @@ public class PostController extends BaseController {
     /**
      * 导出文章列表
      */
-    @PreAuthorize("@ss.hasPermi('oj:post:export')")
+//    @PreAuthorize("@ss.hasPermi('oj:post:export')")
     @Log(title = "文章", businessType = BusinessType.EXPORT)
     @ApiOperation("导出文章列表")
     @PostMapping("/export")
@@ -66,7 +66,7 @@ public class PostController extends BaseController {
     /**
      * 获取文章详细信息
      */
-    @PreAuthorize("@ss.hasPermi('oj:post:query')")
+//    @PreAuthorize("@ss.hasPermi('oj:post:query')")
     @GetMapping(value = "/{id}")
     @ApiOperation("获取文章详情")
     public AjaxResult getInfo(@PathVariable("id") Long id) {
@@ -76,7 +76,7 @@ public class PostController extends BaseController {
     /**
      * 新增文章
      */
-    @PreAuthorize("@ss.hasPermi('oj:post:add')")
+//    @PreAuthorize("@ss.hasPermi('oj:post:add')")
     @Log(title = "文章", businessType = BusinessType.INSERT)
     @PostMapping
     @ApiOperation("新增文章")
@@ -87,7 +87,7 @@ public class PostController extends BaseController {
     /**
      * 修改文章
      */
-    @PreAuthorize("@ss.hasPermi('oj:post:edit')")
+//    @PreAuthorize("@ss.hasPermi('oj:post:edit')")
     @Log(title = "文章", businessType = BusinessType.UPDATE)
     @PutMapping
     @ApiOperation("更新文章")
@@ -98,7 +98,7 @@ public class PostController extends BaseController {
     /**
      * 删除文章
      */
-    @PreAuthorize("@ss.hasPermi('oj:post:remove')")
+//    @PreAuthorize("@ss.hasPermi('oj:post:remove')")
     @Log(title = "文章", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     @ApiOperation("删除文章")

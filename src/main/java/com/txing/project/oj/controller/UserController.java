@@ -66,7 +66,7 @@ public class UserController extends BaseController {
     /**
      * 导出用户列表
      */
-    @PreAuthorize("@ss.hasPermi('oj:user:export')")
+//    @PreAuthorize("@ss.hasPermi('oj:user:export')")
     @Log(title = "用户", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     @ApiOperation("导出用户列表")
@@ -79,7 +79,7 @@ public class UserController extends BaseController {
     /**
      * 获取用户详细信息
      */
-    @PreAuthorize("@ss.hasPermi('oj:user:query')")
+//    @PreAuthorize("@ss.hasPermi('oj:user:query')")
     @GetMapping(value = "/{id}")
     @ApiOperation("获取用户详情信息")
     public AjaxResult getInfo(@PathVariable("id") Long id) {
@@ -89,7 +89,7 @@ public class UserController extends BaseController {
     /**
      * 新增用户
      */
-    @PreAuthorize("@ss.hasPermi('oj:user:add')")
+//    @PreAuthorize("@ss.hasPermi('oj:user:add')")
     @Log(title = "用户", businessType = BusinessType.INSERT)
     @PostMapping
     @ApiOperation("新增用户")
@@ -100,7 +100,7 @@ public class UserController extends BaseController {
     /**
      * 修改用户
      */
-    @PreAuthorize("@ss.hasPermi('oj:user:edit')")
+//    @PreAuthorize("@ss.hasPermi('oj:user:edit')")
     @Log(title = "用户", businessType = BusinessType.UPDATE)
     @PutMapping
     @ApiOperation("修改用户")
@@ -111,7 +111,7 @@ public class UserController extends BaseController {
     /**
      * 删除用户
      */
-    @PreAuthorize("@ss.hasPermi('oj:user:remove')")
+//    @PreAuthorize("@ss.hasPermi('oj:user:remove')")
     @Log(title = "用户", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     @ApiOperation("删除用户")

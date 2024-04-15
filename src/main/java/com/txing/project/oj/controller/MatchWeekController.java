@@ -52,7 +52,7 @@ public class MatchWeekController extends BaseController {
     /**
      * 导出周赛列表
      */
-    @PreAuthorize("@ss.hasPermi('oj:weekMatch:export')")
+//    @PreAuthorize("@ss.hasPermi('oj:weekMatch:export')")
     @Log(title = "周赛", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     @ApiOperation("导出周赛列表")
@@ -66,7 +66,7 @@ public class MatchWeekController extends BaseController {
      * 获取周赛详细信息
      */
     @ApiOperation("获取周赛详细信息")
-    @PreAuthorize("@ss.hasPermi('oj:weekMatch:query')")
+//    @PreAuthorize("@ss.hasPermi('oj:weekMatch:query')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id) {
         return success(matchWeekService.selectMatchWeekById(id));
@@ -75,7 +75,7 @@ public class MatchWeekController extends BaseController {
     /**
      * 新增周赛
      */
-    @PreAuthorize("@ss.hasPermi('oj:weekMatch:add')")
+//    @PreAuthorize("@ss.hasPermi('oj:weekMatch:add')")
     @Log(title = "周赛", businessType = BusinessType.INSERT)
     @PostMapping
     @ApiOperation("新增周赛")
@@ -86,7 +86,7 @@ public class MatchWeekController extends BaseController {
     /**
      * 修改周赛
      */
-    @PreAuthorize("@ss.hasPermi('oj:weekMatch:edit')")
+//    @PreAuthorize("@ss.hasPermi('oj:weekMatch:edit')")
     @Log(title = "周赛", businessType = BusinessType.UPDATE)
     @PutMapping
     @ApiOperation("修改周赛")
@@ -98,7 +98,7 @@ public class MatchWeekController extends BaseController {
      * 删除周赛
      */
     @ApiOperation("删除周赛")
-    @PreAuthorize("@ss.hasPermi('oj:weekMatch:remove')")
+//    @PreAuthorize("@ss.hasPermi('oj:weekMatch:remove')")
     @Log(title = "周赛", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids) {

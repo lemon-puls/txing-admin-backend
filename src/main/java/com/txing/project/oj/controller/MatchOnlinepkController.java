@@ -69,7 +69,7 @@ public class MatchOnlinepkController extends BaseController
     /**
      * 导出在线PK列表
      */
-    @PreAuthorize("@ss.hasPermi('oj:onlinepk:export')")
+//    @PreAuthorize("@ss.hasPermi('oj:onlinepk:export')")
     @Log(title = "在线PK", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     @ApiOperation("导出在线PK列表")
@@ -83,7 +83,7 @@ public class MatchOnlinepkController extends BaseController
     /**
      * 获取在线PK详细信息
      */
-    @PreAuthorize("@ss.hasPermi('oj:onlinepk:query')")
+//    @PreAuthorize("@ss.hasPermi('oj:onlinepk:query')")
     @GetMapping(value = "/{id}")
     @ApiOperation("获取在线PK详细信息")
     public AjaxResult getInfo(@PathVariable("id") Long id)
@@ -94,7 +94,7 @@ public class MatchOnlinepkController extends BaseController
     /**
      * 新增在线PK
      */
-    @PreAuthorize("@ss.hasPermi('oj:onlinepk:add')")
+//    @PreAuthorize("@ss.hasPermi('oj:onlinepk:add')")
     @Log(title = "在线PK", businessType = BusinessType.INSERT)
     @PostMapping
     @ApiOperation("新增在线PK")
@@ -106,7 +106,7 @@ public class MatchOnlinepkController extends BaseController
     /**
      * 修改在线PK
      */
-    @PreAuthorize("@ss.hasPermi('oj:onlinepk:edit')")
+//    @PreAuthorize("@ss.hasPermi('oj:onlinepk:edit')")
     @Log(title = "在线PK", businessType = BusinessType.UPDATE)
     @PutMapping
     @ApiOperation("修改在线PK")
@@ -118,7 +118,7 @@ public class MatchOnlinepkController extends BaseController
     /**
      * 删除在线PK
      */
-    @PreAuthorize("@ss.hasPermi('oj:onlinepk:remove')")
+//    @PreAuthorize("@ss.hasPermi('oj:onlinepk:remove')")
     @Log(title = "在线PK", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     @ApiOperation("删除在线PK")
