@@ -57,7 +57,7 @@ public class CourseController extends BaseController {
     /**
      * 导出课程列表
      */
-    @PreAuthorize("@ss.hasPermi('oj:course:export')")
+//    @PreAuthorize("@ss.hasPermi('oj:course:export')")
     @Log(title = "课程", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     @ApiOperation("导出课程列表")
@@ -70,7 +70,7 @@ public class CourseController extends BaseController {
     /**
      * 获取课程详细信息
      */
-    @PreAuthorize("@ss.hasPermi('oj:course:query')")
+//    @PreAuthorize("@ss.hasPermi('oj:course:query')")
     @GetMapping(value = "/{id}")
     @ApiOperation("获取课程信息byId")
     public AjaxResult getInfo(@PathVariable("id") Long id) {
@@ -91,7 +91,7 @@ public class CourseController extends BaseController {
     /**
      * 修改课程
      */
-    @PreAuthorize("@ss.hasPermi('oj:course:edit')")
+//    @PreAuthorize("@ss.hasPermi('oj:course:edit')")
     @Log(title = "课程", businessType = BusinessType.UPDATE)
     @PutMapping
     @ApiOperation("修改课程")
@@ -102,7 +102,7 @@ public class CourseController extends BaseController {
     /**
      * 删除课程
      */
-    @PreAuthorize("@ss.hasPermi('oj:course:remove')")
+//    @PreAuthorize("@ss.hasPermi('oj:course:remove')")
     @Log(title = "课程", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     @ApiOperation("删除课程")
@@ -125,7 +125,7 @@ public class CourseController extends BaseController {
     /**
      * 获取视频播放签名
      */
-    @PreAuthorize("@ss.hasPermi('oj:course:sign')")
+//    @PreAuthorize("@ss.hasPermi('oj:course:sign')")
     @GetMapping("/play/sign/get")
     @ApiOperation("获取视频播放签名")
     public AjaxResult getPlaySign(@RequestParam("fileId") String fileId) {

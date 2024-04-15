@@ -53,7 +53,7 @@ public class UserController extends BaseController {
     /**
      * 查询UserShow列表
      */
-    @PreAuthorize("@ss.hasPermi('oj:user:list')")
+//    @PreAuthorize("@ss.hasPermi('oj:user:list')")
     @GetMapping("/show/list")
     @ApiOperation("查询UserShow列表")
     public AjaxResult getUserShowList() {
